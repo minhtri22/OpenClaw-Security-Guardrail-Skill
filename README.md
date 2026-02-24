@@ -34,6 +34,11 @@ await guardrail.sandbox.execute(async (signal) => {
 - **Forbidden overrides**: `overrideScore`, `userTier`, `eligibility`, `newBudget` are stripped.
 - **Schema enforcement**: strict JSON validation with payload size limit and sensitive-field detection.
 
+## Tenant Isolation
+- Always include `tenantId` in agent context and outputs; `AuthorityGuard.enforceTenant` rejects cross-tenant data.
+- Cross-tenant leak test lives in `tests/adversarial/cross-tenant.test.ts`.
+- Single-tenant use: set a fixed `tenantId` (e.g., `"default"`) but keep the check enabled to catch accidental mix-ups.
+
 ## Developer Guide
 1. Always pass `AgentContext` with `tenantId`, `userTier`, `skill`.
 2. Wrap every agent call with `guardLlmCall` or manually chain:
