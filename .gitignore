@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.data-security/
+.tmp-*/
+runtime-data/
+coverage/
+tests/**/*.js
+examples/*.js
