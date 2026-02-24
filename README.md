@@ -39,6 +39,11 @@ await guardrail.sandbox.execute(async (signal) => {
 - Cross-tenant leak test lives in `tests/adversarial/cross-tenant.test.ts`.
 - Single-tenant use: set a fixed `tenantId` (e.g., `"default"`) but keep the check enabled to catch accidental mix-ups.
 
+## User Tiers
+- `userTier` drives the skill whitelist in `security.config.ts`; agent calls are blocked if the skill is not allowed for that tier.
+- Guardrail strips any `userTier` the agent tries to return; only the platform sets it.
+- Single-user mode: set `userTier: "single"` (or any label) and configure the corresponding whitelist; keep enforcement on to prevent privilege creep.
+
 ## Developer Guide
 1. Always pass `AgentContext` with `tenantId`, `userTier`, `skill`.
 2. Wrap every agent call with `guardLlmCall` or manually chain:
